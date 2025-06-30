@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean, Integer, ForeignKey, Text, Enum
 from sqlalchemy.orm import Mapped, mapped_column
-import enum  
+import enum
 
 db = SQLAlchemy()
 
@@ -67,9 +67,9 @@ class Comment(db.Model):
 class Follower(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(
-        ForeignKey('user.id'), nullable=False)    
+        ForeignKey('user.id'), nullable=False)
     follower_id: Mapped[int] = mapped_column(
-        ForeignKey('user.id'), nullable=False)  
+        ForeignKey('user.id'), nullable=False)
 
     def serialize(self):
         return {
@@ -77,7 +77,6 @@ class Follower(db.Model):
             "user_id": self.user_id,
             "follower_id": self.follower_id
         }
-
 
 
 class MediaType(enum.Enum):
@@ -88,7 +87,7 @@ class MediaType(enum.Enum):
 class Media(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[MediaType] = mapped_column(
-        Enum(MediaType), nullable=False)  
+        Enum(MediaType), nullable=False)
     url: Mapped[str] = mapped_column(String(255), nullable=False)
     post_id: Mapped[int] = mapped_column(ForeignKey('post.id'), nullable=False)
 
